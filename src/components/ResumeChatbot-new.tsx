@@ -9,7 +9,6 @@ interface Message {
   text: string
   sender: 'user' | 'bot'
   timestamp: Date
-  isAI?: boolean // Indicate if response came from AI
 }
 
 // Conversation starters
@@ -134,7 +133,6 @@ export default function ResumeChatbot() {
           text: data.response,
           sender: 'bot',
           timestamp: new Date(),
-          isAI: data.isAI || false, // Track if response came from AI
         }
         setMessages(prev => [...prev, botMessage])
       } else {
@@ -336,14 +334,8 @@ export default function ResumeChatbot() {
                       <p>{message.text}</p>
                     )}
                   </div>
-                  <span className="text-xs opacity-70 mt-2 flex items-center justify-between">
-                    <span>{message.timestamp.toLocaleTimeString()}</span>
-                    {message.sender === 'bot' && message.isAI && (
-                      <span className="inline-flex items-center space-x-1 text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">
-                        <Brain size={10} />
-                        <span>AI</span>
-                      </span>
-                    )}
+                  <span className="text-xs opacity-70 mt-2 block">
+                    {message.timestamp.toLocaleTimeString()}
                   </span>
                 </div>
               </div>
